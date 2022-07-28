@@ -17,8 +17,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::name('admin.')->prefix('admin')->middleware(['auth', 'admin'])->name('dashboard')->group(function(){
+    Route::get('/dashboard', function () {
+        return view('dashboard', ['role' => 'Admin']);
+    })->name('dashboard');
+
+    Route::resource('products', \App\Http\Controllers\ProductsController::class)->except('show');
+});
+
 Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+    return view('dashboard', ['role' => 'Customer']);
+})->name('dashboard');
+
+
 
 require __DIR__.'/auth.php';
