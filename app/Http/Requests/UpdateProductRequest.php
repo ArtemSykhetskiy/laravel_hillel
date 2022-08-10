@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class CreateProductRequest extends FormRequest
+class UpdateProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +14,7 @@ class CreateProductRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->check() && isAdmin(auth()->user());
+        return isAdmin(auth()->user());
     }
 
     public function message()
@@ -42,15 +43,14 @@ class CreateProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => ['required', 'string' ,'min:3', 'max:255', 'unique:products'],
+            'title' => ['required', 'string' ,'min:3', 'max:255', Rule::unique('products')->ignore($this->product)],
             'description' => ['required', 'string', 'min:20'],
             'short_description' => ['required', 'string', 'min:20', 'max:150'],
-            'SKU' => ['required', 'string', 'min:2', 'max:35', 'unique:products'],
+            'SKU' => ['required', 'string', 'min:2', 'max:35', Rule::unique('products')->ignore($this->product)],
             'price' => ['required', 'numeric'],
             'discount' => ['required', 'numeric', 'min:0', 'max:99'],
             'in_stock' => ['required', 'numeric', 'min:0'],
-            'category' => ['required', 'numeric'],
-            'thumbnail' => ['required', 'image:png,jpg,jpeg'],
+            'category_id' => ['required', 'numeric'],
             'images.*' => ['image:png,jpg,jpeg']
 
         ];

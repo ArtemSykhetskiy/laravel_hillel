@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Services\Contracts\FileStorageServiceInterface;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class FileStorageService implements FileStorageServiceInterface
 {
@@ -23,7 +24,11 @@ class FileStorageService implements FileStorageServiceInterface
 
     public static function remove($file)
     {
-        // TODO: Implement remove() method.
+        if(file_exists($file)){
+            Storage::delete($file);
+        }
+
+        return true;
     }
 
     protected static function randomName(): string
