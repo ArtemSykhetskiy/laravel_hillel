@@ -24,11 +24,7 @@ class FileStorageService implements FileStorageServiceInterface
 
     public static function remove($file)
     {
-        if(file_exists($file)){
-            Storage::delete($file);
-        }
-
-        return true;
+        Storage::delete($file);
     }
 
     protected static function randomName(): string

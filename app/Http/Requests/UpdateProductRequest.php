@@ -32,6 +32,7 @@ class UpdateProductRequest extends FormRequest
             'in_stock:min' => 'In stock cannot be lower than 0',
 
 
+
         ];
     }
 
@@ -51,7 +52,8 @@ class UpdateProductRequest extends FormRequest
             'discount' => ['required', 'numeric', 'min:0', 'max:99'],
             'in_stock' => ['required', 'numeric', 'min:0'],
             'category_id' => ['required', 'numeric'],
-            'images.*' => ['image:png,jpg,jpeg']
+            'images.*' => ['image:png,jpg,jpeg'],
+            'thumbnail' => ['nullable', 'image:png,jpg,jpeg']
 
         ];
     }

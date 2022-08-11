@@ -40,8 +40,7 @@ class CategoriesController extends Controller
      */
     public function store(CreateCategoryRequest $request)
     {
-        $data = $request->validated();
-        Category::create($data);
+        Category::create($request->validated());
 
         return redirect()->route('admin.categories.index')
             ->with('status', "The category #{$request->id} was successfully created!");
@@ -62,8 +61,7 @@ class CategoriesController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        $data = $request->validated();
-        Category::where('id', '=', $category->id)->update($data);
+        $category->update($request->validated());
 
         return redirect()->route('admin.categories.index')
             ->with('status', "The category #{$request->id} was successfully updated!");
@@ -77,7 +75,6 @@ class CategoriesController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->products()->delete();
         $category->delete();
 
         return redirect()->route('admin.categories.index')
