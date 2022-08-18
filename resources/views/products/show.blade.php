@@ -50,7 +50,7 @@
                       method="POST">
                     @csrf
                     <div class="form-group required">
-                        <div class="col-sm-3 stars">
+                        <div class="col-sm-4 stars">
                             @if(!is_null($userRating))
                                 @for($i = 1; $i <= 5; $i++)
                                     <input class="star star-{{$i}}"
@@ -82,16 +82,16 @@
                     </div>
                 </form>
                 <hr>
-{{--                @if(is_user_followed($product))--}}
-{{--                    <form action="{{ route('wishlist.delete', $product) }}" method="POST">--}}
-{{--                        @csrf--}}
-{{--                        @method('DELETE')--}}
-{{--                        <input type="submit" class="btn btn-danger" value="Remove from Wish List">--}}
-{{--                    </form>--}}
-{{--                @else--}}
-{{--                    <a href="{{ route('wishlist.add', $product) }}"--}}
-{{--                       class="btn btn-success">{{ __('Add to Wish List') }}</a>--}}
-{{--                @endif--}}
+                @if(is_user_followed($product))
+                    <form action="{{ route('wishlist.delete', $product) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <input type="submit" class="btn btn-danger" value="Remove from Wish List">
+                    </form>
+                @else
+                    <a href="{{ route('wishlist.add', $product) }}"
+                       class="btn btn-success">{{ __('Add to Wish List') }}</a>
+                @endif
             @endauth
         </div>
     </div>
