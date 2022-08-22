@@ -50,6 +50,7 @@
                         </a>
                     </li>
 
+
                     <!-- Authentication Links -->
                     @guest
                         @if (Route::has('login'))
@@ -74,6 +75,9 @@
                                 <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
                                     {{ __('Admin panel') }}
                                 </a>
+                                    <a class="dropdown-item" href="{{ route('account.index') }}">
+                                        {{ __('My profile') }}
+                                    </a>
                                 @endauth
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
