@@ -56,6 +56,8 @@ Route::middleware('auth')->group(function() {
     Route::post('product/{product}/rating/add', [\App\Http\Controllers\ProductsController::class, 'addRating'])->name('product.rating.add');
     Route::get('wishlist/{product}/add', [\App\Http\Controllers\WishlistController::class, 'add'])->name('wishlist.add');
     Route::delete('wishlist/{product}/delete', [\App\Http\Controllers\WishlistController::class, 'delete'])->name('wishlist.delete');
+    Route::get('checkout', \App\Http\Controllers\CheckoutController::class)->name('checkout');
+    Route::post('order', \App\Http\Controllers\OrdersController::class)->name('order.create');
 
     Route::name('account.')->prefix('account')->group(function() {
         Route::get('/', [\App\Http\Controllers\Account\UsersController::class, 'index'])->name('index');
@@ -67,6 +69,10 @@ Route::middleware('auth')->group(function() {
             ->middleware('can:update,user');
         Route::get('wishlist', \App\Http\Controllers\Account\WishListController::class)->name('wishlist');
     });
+});
+Route::prefix('paypal')->group(function() {
+    Route::post('order/create', [\App\Http\Controllers\Payments\PaypalPaymentController::class, 'create']);
+    Route::post('order/{orderId}/capture', [\App\Http\Controllers\Payments\PaypalPaymentController::class, 'capture']);
 });
 
 

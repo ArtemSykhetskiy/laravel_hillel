@@ -9,6 +9,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/images-preview.js',
                 'resources/js/product-actions.js',
+                'resources/js/paypal-payment.js',
             ],
             refresh: true,
         }),
