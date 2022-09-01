@@ -12,9 +12,9 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
+    <link href="{{ asset('css/iziToast.css') }}" rel="stylesheet">
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/iziToast.css' , 'resources/js/iziToast.js'])
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
 <div id="app">
@@ -101,21 +101,22 @@
             <div class="row">
                 <div class="col-sm-12">
                     @if(session('success'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('success') }}
-                        </div>
+                        @php
+                            notify()->success(session('success'))
+                        @endphp
                     @endif
                     @if(session('warn'))
-                        <div class="alert alert-danger" role="alert">
-                            {{ session('warn') }}
-                        </div>
+                        @php
+                            notify()->warning(session('warn'))
+                        @endphp
                     @endif
                 </div>
             </div>
         </div>
         @yield('content')
     </main>
+    <script src="{{ asset('js/iziToast.js') }}"></script>
 </div>
-@stack('footer-scripts')
+@include('vendor.lara-izitoast.toast')
 </body>
 </html>

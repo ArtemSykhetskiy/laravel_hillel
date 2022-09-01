@@ -6,10 +6,20 @@
                 <h3 class="text-center">{{ __('Categories') }}</h3>
             </div>
             <div class="col-md-12">
-                @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
+                @if(session('status'))
+                    @php
+                        notify()->success(session('status'))
+                    @endphp
+                @endif
+                @if(session('success'))
+                    @php
+                        notify()->success(session('success'))
+                    @endphp
+                @endif
+                @if(session('warn'))
+                    @php
+                        notify()->warning(session('warn'))
+                    @endphp
                 @endif
             </div>
             <div class="col-md-12">
