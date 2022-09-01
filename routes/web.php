@@ -35,6 +35,12 @@ Route::name('admin.')->prefix('admin')->middleware(['auth', 'admin'])->group(fun
 
     Route::resource('products', \App\Http\Controllers\Admin\ProductsController::class)->except(['show']);
     Route::resource('categories', \App\Http\Controllers\Admin\CategoriesController::class)->except(['show']);
+
+    Route::name('orders')->group(function (){
+        Route::get('orders', [\App\Http\Controllers\Admin\OrdersController::class, 'index'])->name('.index');
+        Route::get('orders/{order}/edit', [\App\Http\Controllers\Admin\OrdersController::class, 'edit'])->name('.edit');
+        Route::put('orders/{order}', [\App\Http\Controllers\Admin\OrdersController::class, 'update'])->name('.update');
+    });
 });
 
 
@@ -57,7 +63,10 @@ Route::middleware('auth')->group(function() {
     Route::get('wishlist/{product}/add', [\App\Http\Controllers\WishlistController::class, 'add'])->name('wishlist.add');
     Route::delete('wishlist/{product}/delete', [\App\Http\Controllers\WishlistController::class, 'delete'])->name('wishlist.delete');
     Route::get('checkout', \App\Http\Controllers\CheckoutController::class)->name('checkout');
-    Route::post('order', \App\Http\Controllers\OrdersController::class)->name('order.create');
+//    Route::post('order', \App\Http\Controllers\OrdersController::class)->name('order.create');
+
+    Route::get('order/{order}/invoice', \App\Http\Controllers\Invoices\DownloadInvoiceController::class)
+    ->name('orders.generate.invoice');
 
     Route::name('account.')->prefix('account')->group(function() {
         Route::get('/', [\App\Http\Controllers\Account\UsersController::class, 'index'])->name('index');
@@ -68,6 +77,8 @@ Route::middleware('auth')->group(function() {
             ->name('update')
             ->middleware('can:update,user');
         Route::get('wishlist', \App\Http\Controllers\Account\WishListController::class)->name('wishlist');
+        Route::get('telegram/callback', \App\Http\Controllers\TelegramCallbackController::class)->name('telegram.callback');
+        Route::get('orders/list', [\App\Http\Controllers\OrdersController::class, 'index'])->name('orders.list');
     });
 });
 Route::prefix('paypal')->group(function() {

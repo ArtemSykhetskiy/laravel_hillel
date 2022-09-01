@@ -29,3 +29,11 @@
         </a>
     </div>
 </li>
+
+<li class="nav-item ">
+    <a  class="nav-link" href="{{ route('admin.orders.index') }}" role="button"  aria-haspopup="true" aria-expanded="false">
+        {{ __('Orders') }}
+    </a>
+
+
+</li>

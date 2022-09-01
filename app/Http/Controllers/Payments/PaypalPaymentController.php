@@ -35,8 +35,8 @@ class PaypalPaymentController extends Controller
             $request['vendor_order_id'] = $paypalOrder['id'];
             $request['invoice_id'] = $invoiceId;
 
-            $order = $orderRepository->create($request, $total);
 
+            $order = $orderRepository->create($request, $total);
 
             DB::commit();
 

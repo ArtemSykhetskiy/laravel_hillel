@@ -7,9 +7,11 @@ export default defineConfig({
             input: [
                 'resources/sass/app.scss',
                 'resources/js/app.js',
+                'resources/css/iziToast.css',
                 'resources/js/images-preview.js',
                 'resources/js/product-actions.js',
-                'resources/js/paypal-payment.js',
+                'resources/js/paypal-payments.js',
+                'resources/js/iziToast.js',
             ],
             refresh: true,
         }),

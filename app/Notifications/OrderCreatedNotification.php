@@ -3,23 +3,20 @@
 namespace App\Notifications;
 
 use App\Mail\Orders\NewOrderForCustomer;
+use App\Services\Contracts\InvoicesServiceContract;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\Telegram\TelegramFile;
+use NotificationChannels\Telegram\TelegramMessage;
 
 class OrderCreatedNotification extends Notification
 {
     use Queueable;
 
-    /**
-     * Create a new notification instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
-        //
     }
 
     /**
@@ -30,26 +27,28 @@ class OrderCreatedNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
-    }
-
-
-    public function toMail($notifiable)
-    {
-        return (new NewOrderForCustomer($notifiable->id, $notifiable->user->name))->to($notifiable->user);
-
+        return ['mail', 'telegram'];
     }
 
     /**
-     * Get the array representation of the notification.
+     * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return array
+     * @return NewOrderForCustomer
      */
-    public function toArray($notifiable)
+    public function toMail($notifiable)
     {
-        return [
-            //
-        ];
+        return (new NewOrderForCustomer($notifiable->id, $notifiable->user->name))->to($notifiable->user);
+    }
+
+    public function toTelegram($notifiable)
+    {
+        $invoiceService = app()->make(InvoicesServiceContract::class);
+        $pdf = $invoiceService->generate($notifiable)->save('public');
+
+        return  TelegramFile::create()
+            ->to($notifiable->user->telegram_id)
+            ->content("Hello, your order #{$notifiable->id} was created")
+            ->document($pdf->url(), $pdf->filename);
     }
 }

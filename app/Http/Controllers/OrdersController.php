@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
 {
-    public function __invoke()
-    {
+  public function index(User $user)
+  {
 
-    }
+  }
 }
