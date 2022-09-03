@@ -78,8 +78,16 @@ Route::middleware('auth')->group(function() {
             ->middleware('can:update,user');
         Route::get('wishlist', \App\Http\Controllers\Account\WishListController::class)->name('wishlist');
         Route::get('telegram/callback', \App\Http\Controllers\TelegramCallbackController::class)->name('telegram.callback');
-        Route::get('orders/list', [\App\Http\Controllers\OrdersController::class, 'index'])->name('orders.list');
+        Route::name('orders')->group(function (){
+            Route::get('orders/list', [\App\Http\Controllers\OrdersController::class, 'index'])->name('.list');
+            Route::get('orders/{order}/edit', [\App\Http\Controllers\OrdersController::class, 'edit'])->name('.edit');
+            Route::post('orders/cancel/{order}', [\App\Http\Controllers\OrdersController::class, 'cancel'])->name('.cancel');
+            Route::get('orders/show/{order}', [\App\Http\Controllers\OrdersController::class, 'show'])
+                ->name('.show')
+                ->middleware('can:view,order');;
+        });
     });
+
 });
 Route::prefix('paypal')->group(function() {
     Route::post('order/create', [\App\Http\Controllers\Payments\PaypalPaymentController::class, 'create']);

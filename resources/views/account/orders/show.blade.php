@@ -11,7 +11,7 @@
                 <div class="album py-5 bg-light">
                     <div class="container">
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-6">
                                 <table class="table align-self-center">
                                     <thead>
                                     <tr>
@@ -67,10 +67,14 @@
                                     </form>
                                 @endif
                             </div>
+                            <div class="col-md-6">
+                                @include('account.orders.parts.summary_table', ['products' => $products])
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 @endsection

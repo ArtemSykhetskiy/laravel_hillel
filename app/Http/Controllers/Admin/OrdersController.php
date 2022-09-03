@@ -3,17 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\UpdateOrderRequest;
+use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
 use App\Models\OrderStatus;
-use function redirect;
-use function view;
+use Illuminate\Http\Request;
 
 class OrdersController extends Controller
 {
     public function index()
     {
-        $orders = Order::with(['users', 'status'])->paginate(10);
+
+        $orders = Order::with(['user', 'status'])->orderByDesc('id')->paginate(10);
+//            ->sortable(['created_at' => 'asc'])
+//            ->paginate(10);
 
         return view('admin/orders/index', compact('orders'));
     }
@@ -22,14 +24,13 @@ class OrdersController extends Controller
     {
         $statuses = OrderStatus::all();
         $products = $order->products()->get();
-
-        return view('admin/orders/edit', compact('statuses', 'products'));
+        return view('admin/orders/edit', compact('order', 'products', 'statuses'));
     }
 
     public function update(UpdateOrderRequest $request, Order $order)
     {
         $order->update($request->validated());
 
-        return redirect()->back()->with(['session' => 'Order was updated']);
+        return redirect()->back()->with(['session' => 'Order was updated!']);
     }
 }

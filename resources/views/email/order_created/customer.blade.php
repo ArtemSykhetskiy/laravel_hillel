@@ -5,7 +5,7 @@
 
     The body of your message.
 
-    @component('mail::button', ['url' => '#' . $orderId])
+    @component('mail::button', ['url' => '#' . $order_id])
         Button Text
     @endcomponent
 
