@@ -16,7 +16,7 @@ class FileStorageService implements FileStorageServiceInterface
         }
 
         $filePath = 'public/' . static::randomName() . '.' . $file->getClientOriginalExtension();
-        \Storage::put($filePath, File::get($file));
+        \Storage::disk('s3')->put($filePath, File::get($file));
 
         return $filePath;
 
