@@ -6,7 +6,7 @@ use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 
-class WishListController extends Controller
+class WishlistController extends Controller
 {
     public function add(Product $product)
     {

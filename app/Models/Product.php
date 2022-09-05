@@ -38,11 +38,16 @@ class Product extends Model
     public function followers()
     {
         return $this->belongsToMany(
-          User::class,
-          'wish_list',
-          'product_id',
-          'user_id'
+            User::class,
+            'wish_list',
+            'product_id',
+            'user_id'
         );
+    }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class);
     }
 
     public function available(): Attribute

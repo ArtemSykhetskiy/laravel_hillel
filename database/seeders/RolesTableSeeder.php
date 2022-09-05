@@ -16,7 +16,6 @@ class RolesTableSeeder extends Seeder
     public function run()
     {
         $roles = collect(config('constants.db.roles'));
-
         $roles->each(fn($role) => Role::firstOrCreate(['name' => $role]));
 
     }
