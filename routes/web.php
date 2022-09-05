@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Role;
+use App\Services\AwsPublicLinkService;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,15 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('invoice', function () {
+    $order = \App\Models\Order::all()->last();
+    $service = new \App\Services\InvoicesService();
+    $invoice = $service->generate($order);
+
+    $test = $invoice->save('s3');
+    dd(AwsPublicLinkService::generate($test->filename));
+});
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
 
