@@ -96,7 +96,14 @@ Route::middleware('auth')->group(function() {
                 ->name('.show')
                 ->middleware('can:view,order');;
         });
+
+        Route::get('tokens', [\App\Http\Controllers\Api\TokenController::class, 'index'])->name('tokens');
+        Route::post('tokens/create', [\App\Http\Controllers\Api\TokenController::class, 'create'])->name('tokens.create');
     });
+    Route::post('comment/store', [\App\Http\Controllers\CommentsController::class, 'store'])->name('comment.add');
+    Route::post('comment/reply', [\App\Http\Controllers\CommentsController::class, 'reply'])->name('comment.reply');
+
+
 
 });
 Route::prefix('paypal')->group(function() {

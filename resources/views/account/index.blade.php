@@ -49,6 +49,7 @@
                                         <td scope="row" class="text-center">{{__('Balance')}}</td>
                                         <td class="text-center"> {{ $user->balance }} </td>
                                     </tr>
+
 {{--                                    <tr>--}}
 {{--                                        <td scope="row" class="text-center">{{__('Telegram ID')}}</td>--}}
 {{--                                        <td class="text-center"> {{ $user->telegram_id }} </td>--}}
