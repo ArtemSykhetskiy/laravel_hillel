@@ -13,6 +13,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('account.orders.list') }}">{{ __('My orders') }}</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('account.tokens') }}">{{ __('My tokens') }}</a>
+                </li>
             </ul>
         </div>
     </div>
